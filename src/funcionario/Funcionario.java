@@ -53,8 +53,12 @@ public class Funcionario implements Serializable{
     public void duplicaSalario(int m){
                 
         for (int i = 0; i < salario.length; i++) {
-            if(salario[i] == m)
+            if(salario[i] == m && m < 12)
                 this.salario[i] *= 2; 
+            else
+                System.err.println("índice(numero) do mês inexixtente!");
+            
+            System.out.println("\n Salario duplicado!");
         }
     }
 }
