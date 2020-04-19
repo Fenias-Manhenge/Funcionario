@@ -5,6 +5,7 @@ package funcionario;
  * @author Fenias
  */
 import java.io.*;
+import java.util.Arrays;
 
 public class Funcionario implements Serializable{
 
@@ -28,9 +29,8 @@ public class Funcionario implements Serializable{
     public double getSomaSalarios(){
         double somaS = 0;
         
-        for (int i = 0; i < salario.length; i++) {
+        for (int i = 0; i < salario.length; i++) 
             somaS += this.salario[i];
-        }
         
         return somaS;
     }
@@ -38,22 +38,23 @@ public class Funcionario implements Serializable{
     public double getMediaSalarios(){
         double Med = 0;
         
-        for (int i = 0; i < salario.length; i++) {
+        for (int i = 0; i < salario.length; i++) 
             Med = this.getSomaSalarios() / 12;
-        }
         
         return Med;
     }
 
     @Override
     public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return "Funcionario{" + "codigo= " + codigo + ",\n nome=" + nome + ",\n sexo=" + sexo + ",\n salario="
+                + Arrays.toString(salario) + '}';
     }
+
+   
     
-    public void duplicaSalario(int m){
-                
-        for (int i = 0; i < salario.length; i++) {
-            if(salario[i] == m && m < 12)
+    public void duplicaSalario(int m) {
+        for (int i = 0; i < this.salario.length; i++) {
+            if(this.salario[m] == m && m < 12)
                 this.salario[i] *= 2; 
             else
                 System.err.println("índice(numero) do mês inexixtente!");
