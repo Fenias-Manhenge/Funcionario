@@ -37,29 +37,48 @@ public class Funcionario implements Serializable{
     
     public double getMediaSalarios(){
         double Med = 0;
+
+        Med = this.getSomaSalarios() / 12;
         
-        for (int i = 0; i < salario.length; i++) 
-            Med = this.getSomaSalarios() / 12;
+        System.out.println("Media Aritmética do salario do Funcionario: " + Med);
         
         return Med;
     }
-
-    @Override
-    public String toString() {
-        return "Funcionario{" + "codigo= " + codigo + ",\n nome=" + nome + ",\n sexo=" + sexo + ",\n salario="
-                + Arrays.toString(salario) + '}';
-    }
-
-   
     
-    public void duplicaSalario(int m) {
-        for (int i = 0; i < this.salario.length; i++) {
-            if(this.salario[m] == m && m < 12)
-                this.salario[i] *= 2; 
-            else
-                System.err.println("índice(numero) do mês inexixtente!");
-            
-            System.out.println("\n Salario duplicado!");
-        }
+    public void SalMe(){
+            System.out.println(Arrays.toString(this.salario));
     }
+    
+    public String imprimir() {
+        return "\n Funcionario{\n" + " codigo= " + codigo + ",\n nome=" + nome + ",\n sexo=" + sexo + ",\n salario="
+                + Arrays.toString(salario) + "\n" + '}' + "\n";
+    }
+    
+    /*
+        Duplicar salario do indice de um certo Mês!
+    */
+    public void duplicaSalario(int m) {
+        
+        double dup = this.salario[m] * 2;
+        
+        this.salario[m] = dup;
+        
+        if(this.salario[m] >= 12)
+           System.err.println("índice(numero) do mês inexixtente!");
+        
+        System.out.println("\n Salario duplicado pra: " + dup + "! \n");
+    }
+    
+    /*
+        Duplica todos salarios no Array salario
+    */
+    public void dupTodosSal(){
+        double dup;
+        
+        for (int i = 0; i < salario.length; i++) {
+            dup = this.salario[i] * 2;
+            this.salario[i] = dup;
+        }    
+    }
+  
 }
