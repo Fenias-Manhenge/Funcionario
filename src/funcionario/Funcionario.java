@@ -5,7 +5,7 @@ package funcionario;
  * @author Fenias
  */
 import java.io.*;
-import java.util.Arrays;
+import java.util.*;
 
 public class Funcionario implements Serializable{
 
@@ -45,10 +45,6 @@ public class Funcionario implements Serializable{
         return Med;
     }
     
-    public void SalMe(){
-            System.out.println(Arrays.toString(this.salario));
-    }
-    
     public String imprimir() {
         return "\n Funcionario{\n" + " codigo= " + codigo + ",\n nome=" + nome + ",\n sexo=" + sexo + ",\n salario="
                 + Arrays.toString(salario) + "\n" + '}' + "\n";
@@ -63,7 +59,7 @@ public class Funcionario implements Serializable{
         
         this.salario[m] = dup;
         
-        if(this.salario[m] >= 12)
+        if(m >= 12)
            System.err.println("índice(numero) do mês inexixtente!");
         
         System.out.println("\n Salario duplicado pra: " + dup + "! \n");
@@ -81,4 +77,8 @@ public class Funcionario implements Serializable{
         }    
     }
   
+    public static void main(String[] args) {
+        Funcionario j = new Funcionario();
+        j.getSomaSalarios();
+    }
 }

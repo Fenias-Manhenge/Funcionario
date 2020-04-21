@@ -7,11 +7,13 @@ package funcionario;
 import java.util.*;
 import java.io.*;
 
-public class SistemaFuncionario {
+public class SistemaFuncionario implements Serializable{
     
     private ArrayList<Funcionario> a = new ArrayList<>();
     
     private final Scanner t = new Scanner(System.in);
+    
+    private final boolean hasCode = false;
     
     public void Introduzir(){
     Funcionario f;
@@ -42,7 +44,7 @@ public class SistemaFuncionario {
                     f.sexo = sexo1;
                 }
            
-                System.out.println("Introduza o salario do Mês: \n 0-JANEIRO \n "
+                System.out.println("\n Introduza o salario do Mês: \n 0-JANEIRO \n "
                         + "1-FEVEREIRO \n"
                         + "2-MARÇO \n"
                         + "3-ABRIL \n"
@@ -63,14 +65,15 @@ public class SistemaFuncionario {
                 a.add(f);
                 
                 System.out.println("\n Registo feito com sucesso! \n");
-            }
-            
+                
+            }else 
+                System.err.println("\n Codigo existente, digite outro codigo! \n");
         }while(codigo != 0);
     }
     
     public boolean existe(int codigo){
         boolean hascode = false;
-        
+
         for (int i = 0; i < a.size(); i++) 
             if(a.get(i).codigo == codigo)
                 hascode = true;
@@ -79,15 +82,12 @@ public class SistemaFuncionario {
     }
     
     public void duplicaSal(){
-        Funcionario r;
-        
         System.out.println("\n Digite o codigo a ser duplicado todos salarios!");
         int code = t.nextInt();
         System.out.println("Digite o mês: [ 0/1/2/3/4/5/6/7/8/9/10/11 ]");
         int mes = t.nextInt();
-                
-        for (int i = 0; i < a.size(); i++){ 
-            r = a.get(i);
+        
+        for (Funcionario r : a) {
             if(r.codigo == code)
                 r.duplicaSalario(mes);
         }    
@@ -97,13 +97,10 @@ public class SistemaFuncionario {
         Duplica todos salarios do Array
     */
     public void duplicaTodosSal(){
-        Funcionario x;
-        
         System.out.println("Digite o codigo a ser duplicado todos salarios!");
         int code = t.nextInt();
-                
-        for (int i = 0; i < a.size(); i++) {
-            x = a.get(i);
+        
+        for (Funcionario x : a) {
             if(x.codigo == code)
                 x.dupTodosSal(); // Metodo da classe Funcionario que duplica todos salarios no Array funcionario
         }
@@ -112,16 +109,14 @@ public class SistemaFuncionario {
     }
     
     public void imprimir(){
-        Funcionario h;
-        
         System.out.println("Digite o codigo: ");
         int code = t.nextInt();
 
-        for (int i = 0; i < a.size(); i++) {
-            h = a.get(i);
+        for (Iterator<Funcionario> it = a.iterator(); it.hasNext();) { 
+            Funcionario h = it.next();
             if(h.codigo == code)
                 System.out.println(h.imprimir());
-        }    
+        }
     }
     
     public void imprimirTodosFun(){
@@ -133,20 +128,20 @@ public class SistemaFuncionario {
         imprime salarios mensais de Funcionario
     */
     public void salMensais(){
-        Funcionario b;
+        boolean hasCode = false;
         
         System.out.println("Digite o codigo: "); // Codigo para encotrar o Funcionario!
         int code = t.nextInt();
-        
-        for (int i = 0; i < a.size(); i++) {
-            b = a.get(i);
-            if(b.codigo == code)
-               System.out.println(Arrays.toString(b.salario));
-        }    
+
+        for(Funcionario b : a) // ciclo forEach
+            if(b.codigo == code){
+                hasCode = true;
+                System.out.println(Arrays.toString(b.salario));
+            }    
+        if(! hasCode) System.err.println("\n Codigo inexistente!");
     }
     
     public void salDeCertoMes(){
-        Funcionario m;
         
         System.out.println("Digite o codigo: ");
         int code1 = t.nextInt();
@@ -170,14 +165,13 @@ public class SistemaFuncionario {
             
         }
         
-        for (int i = 0; i < a.size(); i++){
-            m = a.get(i);
-            if(m.codigo == code1){
-                System.out.println("Salario do mês de " + mes + ": " + m.salario[mes]); // Imprimido indice do Array  
-            }    
-            if(m.salario[mes] >= 12)
-               System.err.println("índice(numero) do mês inexixtente!");
-        }    
+        a.forEach((m) -> {
+            if(m.codigo == code1 && mes < 12){
+                System.out.println("Salario do mês de " + mes + ": " + m.salario[mes]); // Imprimido indice do Array
+            }else   
+                System.err.println("índice(numero) do mês inexixtente! \n"
+                        + "Indices validos [ 0/1/2/3/4/5/6/7/8/9/10/11 ]");
+        });
     }
     
     public void MedAritmetica(){
@@ -232,7 +226,7 @@ public class SistemaFuncionario {
         }
     }
     
-    public void lerFichObjecto(){
+    public final void lerFichObjecto(){
         
         try{
             File F = new File ("Funcionario.Dat");
@@ -249,7 +243,7 @@ public class SistemaFuncionario {
     public void menu(){
         
         do{
-            System.out.println("1.INTRODUZIR DADOS... \n"
+            System.out.println("\n 1.INTRODUZIR DADOS... \n"
                     + "2.DUPLICAR SALARIOS DE UM CERTO MES... \n"
                     + "3.DUPLICA SALARIOS DE TODOS MESES... \n"
                     + "4.VISUALIZAR... \n"
@@ -270,9 +264,10 @@ public class SistemaFuncionario {
     
     public SistemaFuncionario(){
         lerFichObjecto();
+        EscFichObjecto();
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException{
         SistemaFuncionario d = new SistemaFuncionario();
         d.menu();
     }
