@@ -12,7 +12,7 @@ public class Funcionario implements Serializable{
     public int codigo;
     public String nome;
     public char sexo;
-    public double salario[] = new double[12];
+    public double salario[] = new double[12], k;
 
     public Funcionario() {
     }
@@ -26,6 +26,9 @@ public class Funcionario implements Serializable{
         }
     }
     
+    /*
+        Soma os salarios
+    */
     public double getSomaSalarios(){
         double somaS = 0;
         
@@ -35,6 +38,9 @@ public class Funcionario implements Serializable{
         return somaS;
     }
     
+    /*
+        Calcula a media dos salarios
+    */
     public double getMediaSalarios(){
         double Med = 0;
 
@@ -45,9 +51,16 @@ public class Funcionario implements Serializable{
         return Med;
     }
     
+    /*
+        Metodo toString
+    */
     public String imprimir() {
         return "\n Funcionario{\n" + " codigo= " + codigo + ",\n nome=" + nome + ",\n sexo=" + sexo + ",\n salario="
                 + Arrays.toString(salario) + "\n" + '}' + "\n";
+    }
+    
+    public void imprimeNome(){
+        System.out.println("\n Nome: " + this.nome + "; \n Soma do salario de mês de Janeiro e Abril: " + this.k + "!");
     }
     
     /*
@@ -74,11 +87,16 @@ public class Funcionario implements Serializable{
         for (int i = 0; i < salario.length; i++) {
             dup = this.salario[i] * 2;
             this.salario[i] = dup;
-        }    
+        }   
+        System.out.println("Salarios duplicados! ");
     }
   
-    public static void main(String[] args) {
-        Funcionario j = new Funcionario();
-        j.getSomaSalarios();
+    public double somaSalJanEDez(){
+        
+        double soma = this.salario[0] + this.salario[11];
+        this.k = soma;
+        System.out.println("\n Soma do salario do Mês de Janeiro e dezembro feita com sucesso: " + this.k + "!");
+        
+        return soma;
     }
 }
