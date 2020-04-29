@@ -1,4 +1,4 @@
-package funcionario;
+﻿package funcionario;
 
 /**
  *
